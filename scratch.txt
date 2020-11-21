@@ -1,0 +1,46 @@
+1) check version
+    1) python -m django --version
+
+2) start project a new Project
+    1) django-admin startproject {{project name}}
+       * {{project name}} is root folder
+       * manage.py command-line utility, interact django with project
+
+
+3) run server python server
+    1) python manage.py runserver (default port : 8000)
+    2) python manage.py runserver {{port number}} (custom port)
+    3) python manage.py runserver {{ip address:port number}} (custom ip :custom port)
+        to allow all the hosts to access the site edit {{project name}}\settings.py  Line no : 28 as ALLOWED_HOSTS = ['*']
+        or just add the host ip address
+
+4) Start django app (application)
+    1) python manage.py startapp {{app-name}}
+            in {{new-app}}/veiws.py create a response
+            to call the above view we need to map it to url in {{project name}}\urls.py
+                for it :
+                    create a urls.py in {{app-name}} in current app
+                        in urls.py import [path from django.urls] and current app's view
+                        then create a list called 'urlpatterns' then add all views in views.py
+                            eg :- path('', views.index, name='index'),
+
+            then next steps is to add current app's url to {{project name}}\urls.py
+                for it :
+                    import include [include from django.urls]
+                    then add path to {{project name}}\urls.py
+                    eg :- path('polls/', include('polls.urls'))
+
+      include() is a function allows referencing other URLSconfs whenever django encounters include() functions
+      chops off whatever part of urls match
+
+      path() function takes two values default [route, view] and options values [kwargs , name]
+
+            route - url pattern , when processing requests django starts at 1st patten in 'urlpatterns' in urls.py
+                    it does not search for GET or POST parameter
+            view - when django find matching pattern it calls the specified view function in views.py
+                   with an HttpRequest first argument
+            name - naming URLS lets you refer to it unambiguously from elsewhere in Django, especially from within templates.
+            this powerful feature allows you to make global changes to the URL patterns of your project while only touching a
+            single file .
+
+
